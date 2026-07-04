@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chappa Bharath Kumar | ServiceNow Developer & AI Backend Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* =================== Root Colors =================== */
+        :root {
+            --dark-bg: #0A0A1F;
+            --section-bg: #14142F;
+            --card-bg: #1C1C3A;
+            --accent-color: #00FFFF;
+            --accent-light: #66FFFF;
+            --text-primary: #E0E0E0;
+            --text-secondary: #AAAAAA;
+            --shadow-color: rgba(0, 255, 255, 0.2);
+            --soft-skills-bg: #2B3544;
+            --soft-skills-text: #E5E7EB;
+            --soft-skills-accent: #6EE7B7;
+            --font-family: 'Poppins', sans-serif;
+            --mono-font: 'Poppins', sans-serif;
+            --cursor-x: 50%;
+            --cursor-y: 50%;
+        }
+        
+        /* Light Theme Colors */
+        .light-theme {
+            --dark-bg: #F0F2F5;
+            --section-bg: #E5E7EB;
+            --card-bg: #FFFFFF;
+            --accent-color: #1E90FF;
+            --accent-light: #3AABFF;
+            --text-primary: #374151;
+            --text-secondary: #6B7280;
+            --shadow-color: rgba(30, 144, 255, 0.2);
+            --soft-skills-bg: #E5E7EB;
+            --soft-skills-text: #374151;
+            --soft-skills-accent: #6495ED;
+            --dynamic-bg-light: #E0E7FF;
+        }
+        
+        .light-theme .hero {
+            background-color: var(--dynamic-bg-light, var(--section-bg));
+            background-image: none;
+            transition: background-color 1s ease;
+        }
+
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--dark-bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2.section-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h2.section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+            transition: background 0.5s ease;
+        }
+
+        /* Navigation - Glassmorphism style */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 31, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.5s ease, border-bottom 0.5s ease;
+        }
+
+        .light-theme nav {
+            background: rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            padding-bottom: 10px;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--accent-light);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-color);
+            color: var(--dark-bg);
+            transform: scale(1.1);
+        }
+
+        /* Hero Section - Unique Animated Background */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--dark-bg);
+            background-image: linear-gradient(rgba(10, 10, 31, 0.9), rgba(10, 10, 31, 0.9)), 
+                              linear-gradient(to right, transparent 1px, #1a1a40 1px), 
+                              linear-gradient(to bottom, transparent 1px, #1a1a40 1px);
+            background-size: 100%, 50px 50px, 50px 50px;
+            transition: background-color 1s ease;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--cursor-x) var(--cursor-y), var(--accent-color) 0%, transparent 25%);
+            opacity: 0.2;
+            filter: blur(80px);
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            font-family: var(--mono-font);
+        }
+        
+        .hero h1 span {
+            color: var(--accent-light);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        /* New Dynamic Skill Icons Section */
+        #dynamic-skills {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 80px;
+            position: relative;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        #dynamic-skills img {
+            width: 70px;
+            height: 70px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: absolute;
+        }
+
+        #dynamic-skills img.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent-color);
+            color: var(--dark-bg);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow-color);
+            background: var(--accent-light);
+        }
+
+        /* About Section */
+        #about .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+            background: var(--section-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s ease;
+        }
+
+        .profile-photo {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid var(--accent-color);
+            transition: all 0.5s ease;
+            box-shadow: 0 0 20px var(--shadow-color);
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--shadow-color);
+        }
+        
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            object-position: 50% 15%; 
+        }
+
+        .bio-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Timeline (Education & Experience) */
+        .timeline {
+            border-left: 2px solid var(--accent-color);
+            padding-left: 30px;
+            position: relative;
+            margin-top: 50px;
+            transition: border-left 0.5s ease;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: -32px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            border: 3px solid var(--section-bg);
+            transition: background 0.5s ease, border-color 0.5s ease;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+
+        .timeline-meta {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .timeline-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        /* Projects Section Filtering & Grid */
+        .project-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .tab-btn {
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .light-theme .tab-btn {
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-light);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: var(--dark-bg);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.5s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .project-card.featured-card {
+            border: 1px solid var(--accent-color);
+            position: relative;
+        }
+
+        .project-card.featured-card::before {
+            content: '⭐ Featured';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--accent-color);
+            color: var(--dark-bg);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-badge {
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--accent-light);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+        
+        .light-theme .tech-badge {
+            background: rgba(30, 144, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        .project-links a {
+            color: var(--accent-light);
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .project-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s ease;
+        }
+
+        .skill-category-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .skill-badge {
+            background: var(--section-bg);
+            color: var(--text-primary);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transition: background 0.5s ease;
+        }
+        
+        .skill-badge img {
+            height: 35px;
+            width: auto;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+            background: var(--accent-color);
+        }
+        
+        .skill-badge:hover img {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .skill-badge.strong {
+            background: var(--accent-color);
+        }
+
+        .skill-badge.strong:hover {
+            background: var(--accent-light);
+        }
+        
+        /* Soft Skills Section Styling */
+        .soft-skills-category {
+            background: var(--card-bg);
+            border-left: 4px solid var(--accent-color);
+            transition: background 0.5s ease, border-color 0.5s ease;
+        }
+
+        .soft-skills-category .skill-badge {
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--accent-light);
+            width: auto;
+            height: auto;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            display: inline-block;
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin: 5px;
+        }
+
+        .soft-skills-category .skill-badge:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .light-theme .soft-skills-category .skill-badge {
+            background: rgba(30, 144, 255, 0.1);
+            color: var(--accent-color);
+        }
+
+        .light-theme .soft-skills-category .skill-badge:hover {
+            background: rgba(30, 144, 255, 0.2);
+        }
+
+        /* Gemini API Response Styling */
+        #response-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--accent-color);
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        #response-container h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+        
+        #response-container p {
+            font-family: var(--mono-font);
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent-color);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Certifications */
+        .certifications-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .cert-badge {
+            background: var(--card-bg);
+            padding: 1.2rem 2.2rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .cert-badge:hover {
+            transform: translateY(-5px);
+            border-left-color: var(--accent-light);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+        }
+
+        /* Contact Section */
+        #contact .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: var(--section-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s ease;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .contact-form .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #333;
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            font-size: 1rem;
+            transition: all 0.5s ease;
+        }
+        
+        .light-theme .contact-form input,
+        .light-theme .contact-form textarea {
+            background: #fff;
+            border-color: #ccc;
+            color: var(--text-primary);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--shadow-color);
+        }
+
+        .contact-form .form-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .contact-form button {
+            cursor: pointer;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: var(--accent-color);
+            color: var(--dark-bg);
+            transition: background-color 0.3s ease;
+        }
+        
+        .contact-form .ai-button {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            color: var(--accent-light);
+        }
+
+        .contact-form button:hover {
+            background: var(--accent-light);
+        }
+        
+        .contact-form .ai-button:hover {
+            background: var(--accent-color);
+            color: var(--dark-bg);
+        }
+        
+        #form-status {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+        
+        .social-links a {
+            color: var(--text-primary);
+            font-size: 1.7rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-light);
+            transform: translateY(-5px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid #374151;
+            margin-top: 2rem;
+            transition: border-color 0.5s ease;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            #about .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            #contact .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .projects-grid, .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-form .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#home" class="active">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#education">EDUCATION</a></li>
+                <li><a href="#experience">WORK</a></li>
+                <li><a href="#projects">PROJECTS</a></li>
+                <li><a href="#skills">SKILLS</a></li>
+                <li><a href="#certifications">CERTIFICATIONS</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>ServiceNow Developer | <span>AI & Python Backend Engineer</span></h1>
+                <p>Passionate developer specializing in automating enterprise workflows on ServiceNow, integrated with Python machine learning backends, system automation, and Generative AI skill sets.</p>
+                
+                <div id="dynamic-skills"></div>
+
+                <div class="btn-group">
+                    <a href="#projects" class="btn">Explore Projects</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="profile-photo">
+                    <img src="./bharath.png" alt="Chappa Bharath Kumar Profile Photo">
+                </div>
+                <div>
+                    <div class="bio-text">
+                        <p>I'm a motivated Information Technology undergraduate and aspiring ServiceNow Developer with a strong foundation in system knowledge, machine learning, and AI integrations. With specialized technical expertise in ServiceNow administration, scripting (Client Scripts, Business Rules, Flow Designer), and Python backend development (FastAPI, ML pipelines), I enjoy building automated, intelligent solutions that improve workflow efficiency and system interoperability.</p>
+                    </div>
+                    
+                    <!-- Coding Profiles -->
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="font-size: 1.1rem; color: var(--text-primary); margin-bottom: 0.8rem; font-weight: 600;">Coding Profiles</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                            <a href="https://leetcode.com/u/bharath_733/" target="_blank" style="text-decoration: none;">
+                                <div style="background: var(--dark-bg); padding: 8px 16px; border-radius: 8px; display: flex; align-items: center; gap: 8px; border-left: 3px solid #FFA116; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                                    <span style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">LeetCode</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Solved 50+</span>
+                                </div>
+                            </a>
+                            <a href="https://www.codechef.com/users/aimbot_733" target="_blank" style="text-decoration: none;">
+                                <div style="background: var(--dark-bg); padding: 8px 16px; border-radius: 8px; display: flex; align-items: center; gap: 8px; border-left: 3px solid #5B4636; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                                    <span style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">CodeChef</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">Solved 200+</span>
+                                </div>
+                            </a>
+                            <a href="https://www.hackerrank.com/profile/bharatkumarchap1" target="_blank" style="text-decoration: none;">
+                                <div style="background: var(--dark-bg); padding: 8px 16px; border-radius: 8px; display: flex; align-items: center; gap: 8px; border-left: 3px solid #2EC866; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                                    <span style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">HackerRank</span>
+                                    <span style="color: var(--text-secondary); font-size: 0.8rem;">3★ Python | 4★ SQL</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="info-grid" style="margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="info-item">
+                            <span class="info-label" style="color: var(--text-secondary); font-weight: 600; margin-right: 5px;">Name:</span>
+                            <span class="info-value" style="color: var(--text-primary);">Chappa Bharath Kumar</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label" style="color: var(--text-secondary); font-weight: 600; margin-right: 5px;">Location:</span>
+                            <span class="info-value" style="color: var(--text-primary);">Kakinada, AP, India</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label" style="color: var(--text-secondary); font-weight: 600; margin-right: 5px;">Email:</span>
+                            <span class="info-value" style="color: var(--text-primary); font-size: 0.95rem;">chappabharathkumar8@gmail.com</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label" style="color: var(--text-secondary); font-weight: 600; margin-right: 5px;">Phone:</span>
+                            <span class="info-value" style="color: var(--text-primary);">+91 7815809989</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">Bachelor of Technology in Information Technology</div>
+                    <div class="timeline-meta">Aditya College of Engineering and Technology, Surampalem | 2023 – Present</div>
+                    <div class="timeline-desc">
+                        <p><strong>Current CGPA: 7.02 / 10.0</strong></p>
+                        <p style="margin-top: 5px;">Relevant Coursework: Operating Systems, Computer Networks, Data Structures & Algorithms, Database Management Systems (DBMS), Cloud Computing.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">MPC in Intermediate</div>
+                    <div class="timeline-meta">Pragathi Junior College | 2021 – 2023</div>
+                    <div class="timeline-desc">Percentage: 92% | Focused on Mathematics, Physics, and Chemistry</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-title">High School</div>
+                    <div class="timeline-meta">Zilla Parishadh High School | 2016 – 2021</div>
+                    <div class="timeline-desc">Graduated with distinction | Developed foundational knowledge in science and mathematics</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-title">ServiceNow & AI Backend Developer (Academic Projects)</div>
+                    <div class="timeline-meta">Surampalem, Andhra Pradesh | 2023 – Present</div>
+                    <div class="timeline-desc">
+                        <ul>
+                            <li>Designed and automated enterprise workflows in ServiceNow, implementing UI scripts, Script Includes, and Flow Designers.</li>
+                            <li>Built AI microservices using Python FastAPI, prompting LLM APIs (Gemini) for natural language translation tasks.</li>
+                            <li>Trained and implemented data preprocessing pipelines for machine learning model testing (loan prediction, movie recommender).</li>
+                            <li>Engineered automated communication workflows connecting Twilio, Telegram, and Google Sheets APIs with Python schedulers.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            
+            <!-- Tabs filters -->
+            <div class="project-tabs">
+                <button class="tab-btn active" data-filter="all">All Projects</button>
+                <button class="tab-btn" data-filter="servicenow">ServiceNow</button>
+                <button class="tab-btn" data-filter="aiml">AI & ML</button>
+                <button class="tab-btn" data-filter="backend">Backend & Automation</button>
+                <button class="tab-btn" data-filter="webmobile">Web & Mobile</button>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Smart Library ServiceNow -->
+                <div class="project-card featured-card" data-category="servicenow">
+                    <h3 class="project-title">Smart Library Workflow</h3>
+                    <p class="project-desc">
+                        A customized workflow application built on ServiceNow to automate university library bookings, cataloging, lending operations, and overdue fines tracking. Utilized Client Scripts, Business Rules, UI Actions, Script Includes, and Flow Designer workflows.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">ServiceNow</span>
+                        <span class="tech-badge">ITSM</span>
+                        <span class="tech-badge">Client Scripts</span>
+                        <span class="tech-badge">Flow Designer</span>
+                        <span class="tech-badge">Script Includes</span>
+                        <span class="tech-badge">JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/Smart-Library-Workflow--_SERVICENOW_--" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- SQL Query Generator -->
+                <div class="project-card featured-card" data-category="aiml">
+                    <h3 class="project-title">AI SQL Query Generator</h3>
+                    <p class="project-desc">
+                        A generative AI-powered application that parses natural language English queries and translates them into structured SQL code using large language models. Features an intuitive web dashboard for real-time prompt-based query generation.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">LLM</span>
+                        <span class="tech-badge">Gemini API</span>
+                        <span class="tech-badge">FastAPI</span>
+                        <span class="tech-badge">Prompt Engineering</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/SQL-Query-Generator" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- Loan Approval Prediction -->
+                <div class="project-card featured-card" data-category="aiml">
+                    <h3 class="project-title">Loan Approval Prediction</h3>
+                    <p class="project-desc">
+                        An end-to-end machine learning system that analyzes credit scores, applicants' assets, and details to predict loan approvals. Includes data preprocessing, feature engineering, classification models, and web deployment.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Scikit-Learn</span>
+                        <span class="tech-badge">XGBoost</span>
+                        <span class="tech-badge">Pandas</span>
+                        <span class="tech-badge">Vercel</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://loan-approval-prediction-kappa.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        <a href="https://github.com/bharathkumar7733/loan_approval_prediction" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- Movie Recommender -->
+                <div class="project-card" data-category="aiml">
+                    <h3 class="project-title">Movie Recommender System</h3>
+                    <p class="project-desc">
+                        A system that recommends movies using content filtering and collaborative filtering. Powered by Cosine Similarity and user metadata datasets, wrapped in an interactive Streamlit UI.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Streamlit</span>
+                        <span class="tech-badge">Scikit-Learn</span>
+                        <span class="tech-badge">Pandas</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://movie-recommender-nine-green.vercel.app" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                        <a href="https://github.com/bharathkumar7733/movie-recommender" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Turf Booking -->
+                <div class="project-card" data-category="backend">
+                    <h3 class="project-title">WhatsApp Turf Booking Bot</h3>
+                    <p class="project-desc">
+                        A Python backend integration featuring automated chat dialogues via WhatsApp to query sports turf schedules, book slots, and dispatch booking receipts using Twilio APIs.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Twilio API</span>
+                        <span class="tech-badge">Flask</span>
+                        <span class="tech-badge">Webhooks</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/whatsapp_bot_turfbooking" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- Daily News Telegram Bot -->
+                <div class="project-card" data-category="backend">
+                    <h3 class="project-title">Daily News Telegram Bot</h3>
+                    <p class="project-desc">
+                        A system script that executes daily cron routines to scrape tech news feeds, compile briefings, and broadcast them automatically to a Telegram channel.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Telegram API</span>
+                        <span class="tech-badge">BeautifulSoup</span>
+                        <span class="tech-badge">Scheduling</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/daily-news-telegram-bot" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- Water Reminder SMS -->
+                <div class="project-card" data-category="backend">
+                    <h3 class="project-title">Water Reminder SMS</h3>
+                    <p class="project-desc">
+                        A scheduling script that runs as a system background service, automatically pushing hydration alerts to users via Twilio SMS.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Twilio SMS</span>
+                        <span class="tech-badge">Scheduling</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/water-reminder-sms" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- TournamentOS SaaS -->
+                <div class="project-card" data-category="webmobile">
+                    <h3 class="project-title">TournamentOS SaaS</h3>
+                    <p class="project-desc">
+                        A SaaS platform architecture built to scale tournament bookings, ticketing, brackets generation, and scorekeeping profiles.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">TypeScript</span>
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">PostgreSQL</span>
+                        <span class="tech-badge">Express</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/Building-TournamentOS-SaaS-Platform" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- Smart Attendance App -->
+                <div class="project-card" data-category="webmobile">
+                    <h3 class="project-title">Smart Attendance App</h3>
+                    <p class="project-desc">
+                        An Android app for real-time mobile/biometric attendance tracking, student calendars, logs, and report exports with Firebase backend integration.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Java</span>
+                        <span class="tech-badge">Android SDK</span>
+                        <span class="tech-badge">Firebase</span>
+                        <span class="tech-badge">XML</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/smart-attendance-app" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- TurfZone Booking Platform -->
+                <div class="project-card" data-category="webmobile">
+                    <h3 class="project-title">TurfZone Booking Platform</h3>
+                    <p class="project-desc">
+                        A full stack web app that enables users to book slots, view real-time turf calendars, and pay online. Also includes an admin panel.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">Node.js</span>
+                        <span class="tech-badge">MongoDB</span>
+                        <span class="tech-badge">Express</span>
+                        <span class="tech-badge">TailwindCSS</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/turfzone-booking-platform" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- LocalStorage To-Do App -->
+                <div class="project-card" data-category="webmobile">
+                    <h3 class="project-title">LocalStorage To-Do App</h3>
+                    <p class="project-desc">
+                        A lightweight frontend to-do application that handles custom user tasks, priority highlights, and persistent local storage states.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">CSS3</span>
+                        <span class="tech-badge">LocalStorage</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/localstorage-todo-app" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+
+                <!-- Custom Music Player -->
+                <div class="project-card" data-category="webmobile">
+                    <h3 class="project-title">Custom Music Player</h3>
+                    <p class="project-desc">
+                        A web application audio deck with playlist queues, volume adjustments, visualizers, and state caching.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">HTML5 Audio</span>
+                        <span class="tech-badge">CSS3</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/bharathkumar7733/music-player" target="_blank"><i class="fab fa-github"></i> Repository</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <!-- ServiceNow -->
+                <div class="skill-category">
+                    <h3 class="skill-category-title"><i class="fas fa-desktop"></i> ServiceNow Development</h3>
+                    <div class="skill-list" style="justify-content: flex-start; gap: 8px;">
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">ServiceNow Administration</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Client Scripts</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Business Rules</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">UI Policies & Actions</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Script Includes</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Flow Designer</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">ITSM</span>
+                    </div>
+                </div>
+                <!-- AI & ML -->
+                <div class="skill-category">
+                    <h3 class="skill-category-title"><i class="fas fa-brain"></i> AI & Machine Learning</h3>
+                    <div class="skill-list" style="justify-content: flex-start; gap: 8px;">
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Generative AI / LLMs</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Scikit-Learn</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Pandas & NumPy</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Prompt Engineering</span>
+                        <span class="tech-badge" style="font-size: 0.95rem; padding: 8px 16px;">Feature Engineering</span>
+                    </div>
+                </div>
+                <!-- Programming & Backend -->
+                <div class="skill-category">
+                    <h3 class="skill-category-title"><i class="fas fa-code"></i> Backend & Systems</h3>
+                    <div class="skill-list">
+                        <span class="skill-badge strong"><img src="https://skillicons.dev/icons?i=python" alt="Python Icon" /></span>
+                        <span class="skill-badge strong"><img src="https://skillicons.dev/icons?i=java" alt="Java Icon" /></span>
+                        <span class="skill-badge"><img src="https://skillicons.dev/icons?i=js" alt="JavaScript Icon" /></span>
+                        <span class="skill-badge"><img src="https://skillicons.dev/icons?i=linux" alt="Linux Icon" /></span>
+                        <span class="skill-badge"><img src="https://skillicons.dev/icons?i=git" alt="Git Icon" /></span>
+                    </div>
+                </div>
+                <!-- Soft Skills -->
+                <div class="skill-category soft-skills-category">
+                    <h3 class="skill-category-title"><i class="fas fa-users"></i> Soft Skills</h3>
+                    <div class="skill-list">
+                        <span class="skill-badge">Deadline Driven Planning</span>
+                        <span class="skill-badge">Collaborative Problem Solving</span>
+                        <span class="skill-badge">Strength Assessment</span>
+                        <span class="skill-badge">Creativity</span>
+                        <span class="skill-badge">Communication</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certifications-list">
+                <span class="cert-badge">Oracle Cloud Infrastructure 2025 Generative AI Professional</span>
+                <span class="cert-badge">Oracle Java Certified Foundations Associate</span>
+                <span class="cert-badge">Python Essentials 1 – Cisco Networking Academy</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-content">
+                <div>
+                    <h3 style="font-size: 1.5rem; color: var(--text-primary); margin-bottom: 1rem;">Let's Connect!</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.7;">
+                        I am actively seeking internship or entry-level opportunities as a ServiceNow Developer or Python Backend / AI Engineer. Feel free to contact me or check my social accounts below!
+                    </p>
+                     
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                            <i class="fas fa-envelope" style="font-size: 1.5rem; color: var(--accent-light); margin-right: 1rem;"></i>
+                            <span style="font-size: 1.1rem; color: var(--text-secondary);">chappabharathkumar8@gmail.com</span>
+                        </li>
+                        <li style="display: flex; align-items: center; margin-bottom: 1.5rem;">
+                            <i class="fas fa-phone" style="font-size: 1.5rem; color: var(--accent-light); margin-right: 1rem;"></i>
+                            <span style="font-size: 1.1rem; color: var(--text-secondary);">+91 7815809989</span>
+                        </li>
+                        <li style="display: flex; align-items: center;">
+                            <i class="fas fa-map-marker-alt" style="font-size: 1.5rem; color: var(--accent-light); margin-right: 1rem;"></i>
+                            <span style="font-size: 1.1rem; color: var(--text-secondary);">Kakinada, Andhra Pradesh, India</span>
+                        </li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="https://github.com/bharathkumar7733" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/chappa-bharath-kumar-573b6038b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit">Send Message</button>
+                            <button type="button" class="ai-button" id="aiDraftBtn">✨ Draft Response</button>
+                            <button type="button" class="ai-button" id="aiCoverLetterBtn">✨ Generate Cover Letter</button>
+                        </div>
+                    </form>
+                    <div id="response-container">
+                        <h4>AI-Drafted Content:</h4>
+                        <p id="ai-response"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Chappa Bharath Kumar. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Interactive Background Effect
+        document.addEventListener('mousemove', (e) => {
+            const body = document.body;
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            body.style.setProperty('--cursor-x', `${x}%`);
+            body.style.setProperty('--cursor-y', `${y}%`);
+        });
+
+        // Dynamic Skill Icons and Background Animation
+        const skillsData = [
+            { icon: "https://skillicons.dev/icons?i=python", color: "#306998", lightColor: "#B0C4DE" },
+            { icon: "https://skillicons.dev/icons?i=java", color: "#007396", lightColor: "#ADD8E6" },
+            { icon: "https://skillicons.dev/icons?i=react", color: "#61DAFB", lightColor: "#E0FFFF" },
+            { icon: "https://skillicons.dev/icons?i=nodejs", color: "#339933", lightColor: "#90EE90" },
+            { icon: "https://skillicons.dev/icons?i=linux", color: "#FCC624", lightColor: "#FFFACD" },
+            { icon: "https://skillicons.dev/icons?i=git", color: "#F05032", lightColor: "#FFE4E1" }
+        ];
+        
+        let currentSkillIndex = 0;
+        const dynamicSkillsContainer = document.getElementById('dynamic-skills');
+        const heroSection = document.getElementById('home');
+        
+        function changeSkill() {
+            const currentSkill = skillsData[currentSkillIndex];
+            
+            // Update background color based on theme
+            const isLightTheme = document.body.classList.contains('light-theme');
+            heroSection.style.backgroundColor = isLightTheme ? currentSkill.lightColor : currentSkill.color;
+
+            // Create new icon element
+            const newIcon = document.createElement('img');
+            newIcon.src = currentSkill.icon;
+            newIcon.alt = "Skill Icon";
+            
+            // Add to the container and fade in
+            dynamicSkillsContainer.innerHTML = '';
+            dynamicSkillsContainer.appendChild(newIcon);
+
+            setTimeout(() => {
+                newIcon.classList.add('active');
+            }, 10);
+
+            // Prepare for the next skill
+            currentSkillIndex = (currentSkillIndex + 1) % skillsData.length;
+        }
+
+        // Initial call and set interval for subsequent changes
+        window.addEventListener('DOMContentLoaded', () => {
+            changeSkill();
+            setInterval(changeSkill, 3000); // Change icon every 3 seconds
+        });
+        
+        // Dark/Light Theme Toggle
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+
+        // Check for saved theme preference or system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: 2_color_scheme)').matches) {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            const isLightTheme = document.body.classList.contains('light-theme');
+            localStorage.setItem('theme', isLightTheme ? 'light' : 'dark');
+            themeIcon.classList.toggle('fa-moon', !isLightTheme);
+            themeIcon.classList.toggle('fa-sun', isLightTheme);
+
+            // Re-run the skill animation to get the correct background color for the new theme
+            changeSkill();
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const sections = document.querySelectorAll('section');
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        timelineItems.forEach(item => {
+            observer.observe(item);
+        });
+
+        // Nav link active toggle on scroll
+        const navLinks = document.querySelectorAll('nav a');
+        window.addEventListener('scroll', () => {
+            let fromTop = window.scrollY + 100;
+            navLinks.forEach(link => {
+                const section = document.querySelector(link.hash);
+                if (!section) return;
+                if (
+                    section.offsetTop <= fromTop &&
+                    section.offsetTop + section.offsetHeight > fromTop
+                ) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Project filtering tabs logic
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                        card.offsetHeight; 
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Handle Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formStatus = document.getElementById('form-status');
+            
+            formStatus.textContent = 'Thank you for your message! I will get back to you soon.';
+            formStatus.style.color = getComputedStyle(document.documentElement).getPropertyValue('--accent-color');
+            
+            document.getElementById('contactForm').reset();
+        });
+        
+        // Gemini API Integration for Contact Form
+        const messageTextarea = document.getElementById('message');
+        const responseContainer = document.getElementById('response-container');
+        const aiResponseParagraph = document.getElementById('ai-response');
+        
+        async function callGeminiApi(prompt) {
+            try {
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    tools: [{ "google_search": {} }],
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                return result.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error('Gemini API call failed:', error);
+                throw new Error('Failed to generate a response. Please try again later.');
+            }
+        }
+        
+        // Event listener for Draft Response button
+        document.getElementById('aiDraftBtn').addEventListener('click', async () => {
+            const message = messageTextarea.value.trim();
+            if (!message) {
+                aiResponseParagraph.textContent = 'Please enter a message to generate a response.';
+                responseContainer.style.display = 'block';
+                return;
+            }
+
+            aiResponseParagraph.innerHTML = 'Generating draft... <span class="loading-spinner"></span>';
+            responseContainer.style.display = 'block';
+            
+            const prompt = `Act as a professional assistant for Chappa Bharath Kumar. A person named "${document.getElementById('name').value}" with email "${document.getElementById('email').value}" sent you the following message: "${message}". Please draft a polite, professional, and concise response to this message. The response should thank them for reaching out and state that Bharath will get back to them soon. Do not include a subject line or a salutation.`;
+            
+            try {
+                const generatedText = await callGeminiApi(prompt);
+                aiResponseParagraph.textContent = generatedText;
+            } catch (error) {
+                aiResponseParagraph.textContent = error.message;
+            }
+        });
+        
+        // Event listener for Generate Cover Letter button
+        document.getElementById('aiCoverLetterBtn').addEventListener('click', async () => {
+            aiResponseParagraph.innerHTML = 'Generating cover letter... <span class="loading-spinner"></span>';
+            responseContainer.style.display = 'block';
+
+            // Scrape skills and projects from the page
+            const skills = Array.from(document.querySelectorAll('.skills-grid .tech-badge')).map(el => el.textContent.trim()).join(', ');
+            const projects = Array.from(document.querySelectorAll('.project-card')).map(card => {
+                const title = card.querySelector('.project-title').textContent.trim();
+                const desc = card.querySelector('.project-desc').textContent.trim();
+                const techStack = Array.from(card.querySelectorAll('.tech-badge')).map(el => el.textContent.trim()).join(', ');
+                return `Project: ${title}\nDescription: ${desc}\nTechnologies: ${techStack}`;
+            }).join('\n\n');
+
+            const prompt = `You are a career expert helping Chappa Bharath Kumar write a cover letter. Bharath's goal is to be a ServiceNow Developer with a strong AI/ML skillset, Python backend expertise, and system knowledge.
+            
+            Here are his skills: ${skills}
+            
+            Here are some of his projects:
+            ${projects}
+            
+            Please draft a concise and professional cover letter highlighting his ServiceNow automation, Python ML backend, and Generative AI skills. The letter should focus on his capability to build intelligent automated workflows and system solutions. Do not include placeholders like [Hiring Manager Name] or [Company Name]. Focus on a strong, general statement of purpose.`;
+            
+            try {
+                const generatedText = await callGeminiApi(prompt);
+                aiResponseParagraph.textContent = generatedText;
+            } catch (error) {
+                aiResponseParagraph.textContent = error.message;
+            }
+        });
+    </script>
+</body>
+</html>
